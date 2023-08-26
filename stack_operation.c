@@ -5,7 +5,6 @@
  * @stack: where to push the element
  * @line_number: the line where push instruction is called from
  */
-
 void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new_node = malloc(sizeof(struct stack_s));
@@ -41,7 +40,6 @@ void push(stack_t **stack, unsigned int line_number)
  * @stack: where to print the elements from
  * @line_number: the line where pall instruction is called from
  */
-
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
@@ -52,7 +50,21 @@ void pall(stack_t **stack, unsigned int line_number)
 	temp = *stack;
 	while (temp != NULL)
 	{
-		fprintf(stdout, "%d\n", (temp)->n);
+		fprintf(stdout, "%d\n", temp->n);
 		temp = temp->prev;
 	}
+}
+
+/**
+ * pint - print the top element in the stack
+ * @stack: the stack
+ * @line_number: the line where pint instruction is called from
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+	(void)line_number;
+	if (stack == NULL || *stack == NULL)
+		return;
+
+	fprintf(stdout, "%d\n", (*stack)->n);
 }
