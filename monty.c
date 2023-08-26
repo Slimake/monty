@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 			if (strcmp(arg1, "push") == 0)
 			{
 				arg2 = strtok(NULL, "$ \t\r\a\n;:");
-				if (arg2 == NULL || !isdigit(arg2[0]))
+				if (arg2 == NULL || !atoi(arg2))
 				{
 					fprintf(stderr, "L%u: usage: push integer\n", line_num);
 					exit(EXIT_FAILURE);
