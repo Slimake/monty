@@ -20,6 +20,7 @@ int main(int argc, char **argv)
 	instruction_t op[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pint", pint},
 		{NULL, NULL}
 	};
 
