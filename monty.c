@@ -10,10 +10,10 @@ int data;
  */
 int main(int argc, char **argv)
 {
-	int i;
-	char *arg1;
-	char *arg2;
+	char *arg, *token, *line, *endptr, *trimmed_token, *instruction;
 	FILE *file;
+	size_t len;
+	int i, value;
 	char line_buf[1024];
 	stack_t *stack = NULL;
 	unsigned int line_num = 0;
@@ -39,44 +39,74 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	/* Read monty bytecodes from file line by line */
 	while (fgets(line_buf, sizeof(line_buf), file))
 	{
-		/* Increment line number on each line */
+		/* Pointer to the current line */
+		line = line_buf;
 		line_num++;
-		/* get the first */
-		arg1 = strtok(line_buf, "$ \t\r\a\n;:");
-		if (arg1)
+
+		/* Tokenize the line using semicolon delimiter */
+		while ((token = __strtok_r(line, ";$", &line)) != NULL)
 		{
-			if (strcmp(arg1, "push") == 0)
+			/* Remove spaces before and after token */
+			trimmed_token = token;
+			while (*trimmed_token == ' ' || *trimmed_token == '\t')
+				trimmed_token++;
+			len = strlen(trimmed_token);
+			while (len > 0 && (trimmed_token[len - 1] == ' ' ||
+				trimmed_token[len - 1] == '\t' || trimmed_token[len - 1] == '\n'))
+				trimmed_token[--len] = '\0';
+
+			if (len > 0)
 			{
-				arg2 = strtok(NULL, "$ \t\r\a\n;:");
-				if (arg2 == NULL || !atoi(arg2))
+				/* Remove spaces before and after instruction */
+				instruction = strtok(trimmed_token, " \t\n");
+				if (instruction == NULL)
 				{
-					fprintf(stderr, "L%u: usage: push integer\n", line_num);
+					fprintf(stderr, "L%u: unknown instruction\n", line_num);
 					exit(EXIT_FAILURE);
 				}
-				data = atoi(arg2);
-			}
-
-			i = 0;
-			while (op[i].opcode)
-			{
-				if (strcmp(op[i].opcode, arg1) == 0)
+				i = 0;
+				while (op[i].opcode)
 				{
-					op[i].f(&stack, line_num);
-					break;
+					if (strcmp(instruction, "push") == 0 &&
+						strcmp(instruction, op[i].opcode) == 0)
+					{
+						arg = strtok(NULL, " \t\n");
+					if (arg == NULL)
+					{
+						fprintf(stderr, "L%u: usage: push integer\n", line_num);
+						exit(EXIT_FAILURE);
+					}
+						/* Check if argument to push is a number */
+						value = strtol(arg, &endptr, 10);
+					if (*endptr != '\0')
+					{
+						fprintf(stderr, "L%u: usage: push integer\n", line_num);
+						exit(EXIT_FAILURE);
+					}
+
+						data = value;
+						op[i].f(&stack, line_num);
+						break;
+					}
+					else if (strcmp(instruction, op[i].opcode) == 0)
+					{
+						op[i].f(&stack, line_num);
+						break;
+					}
+					i++;
 				}
-				i++;
-			}
-			if (op[i].opcode == NULL)
-			{
-				fprintf(stderr, "L%u: unknown instruction %s\n", line_num, arg1);
-				exit(EXIT_FAILURE);
+				if (op[i].opcode == NULL)
+				{
+					fprintf(stderr, "L%u: unknown instruction %s\n", line_num, instruction);
+					exit(EXIT_FAILURE);
+				}
 			}
 		}
 	}
 
+	/* Close the file */
 	fclose(file);
 	return (0);
 }
