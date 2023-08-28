@@ -72,3 +72,26 @@ void pint(stack_t **stack, unsigned int line_number)
 
 	fprintf(stdout, "%d\n", (*stack)->n);
 }
+
+
+/**
+ * pop - removes the top element in the stack
+ * @stack: the stack
+ * @line_number: the line where pop instruction is called from
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (stack == NULL)
+		return;
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't pop an empty stack", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	temp = *stack;
+	*stack = (*stack)->prev;
+	free(temp);
+}
