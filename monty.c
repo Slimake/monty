@@ -108,5 +108,7 @@ int main(int argc, char **argv)
 
 	/* Close the file */
 	fclose(file);
+	/* Free memory */
+	free_stack(stack);
 	return (0);
 }
