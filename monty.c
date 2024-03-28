@@ -40,11 +40,19 @@ void monty(int argc, char **argv)
 	/* Get each line in the file */
 	while (fgets(line, sizeof(line), fp) != NULL)
 	{
+		int flag = 1;
 		line_num++;
 		/* Get words in each line */
 		arg = strtok(line, " ");
+
+		if (strcmp(arg, "$\n") == 0)
+			flag = 0;
+		else if (strcmp(arg, "\n") == 0)
+			flag = 0;
+
+		
 		/* If args is push call push() */
-		if (strcmp(arg, "push") == 0)
+		if (flag && strcmp(arg, "push") == 0)
 		{
 			while (arg != NULL)
 			{
@@ -55,26 +63,27 @@ void monty(int argc, char **argv)
 			if (arg == NULL || (!atoi(arg)))
 			{
 				fprintf(stderr, "L%u: usage: push integer\n", line_num);
-				/*exit(EXIT_FAILURE);*/
+				exit(EXIT_FAILURE);
 			}
 			/* If arg is an integer, call push function*/
 			if (atoi(arg))
 				push(atoi(arg));
 		}
 		/* If args is pall call pall() */
-		else if (strcmp(arg, "pall") == 0)
+		else if (flag && strcmp(strtok(arg, " $\t\n"), "pall") == 0)
 		{
 			pall();
 		}
-		else if (strcmp(arg, "pint") == 0)
+		else if (flag && strcmp(strtok(arg, " $\t\n"), "pint") == 0)
 		{
 			pint(line_num);
 		}
 		else
 		{
 			fprintf(stderr, "L%u: unknown instruction %s", line_num, arg);
-			/*exit(EXIT_FAILURE);*/
+			exit(EXIT_FAILURE);
 		}
+		
 	}
 	fclose(fp);
 }
