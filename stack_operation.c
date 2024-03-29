@@ -98,6 +98,7 @@ void pop(unsigned int line_number)
 
 /**
  * swap - swap the top two elements of the stack
+ * line_number: line number of the opcode
  *
  * Return: nothing
  */
@@ -107,11 +108,13 @@ void swap(unsigned int line_number)
 	stack_t *temp2 = NULL;
 	stack_t *temp3 = NULL;
 
-	if (stack == NULL)
+	if ((stack == NULL) || (stack->next == NULL))
 	{
 		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
+	if 
 
 	temp1 = stack;
 	temp2 = stack->next;
