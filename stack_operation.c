@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "monty.h"
 
-stack_t *head = NULL;
+stack_t *stack = NULL;
 
 /**
  * push - push an element inside a stack
@@ -13,7 +13,7 @@ stack_t *head = NULL;
 void push(int elem)
 {
 	stack_t *new_node;
-	stack_t *temp = head;
+	stack_t *temp = stack;
 	/* Allocate memory to new_node */
 	new_node = malloc(sizeof(stack_t));
 	/* Check if new_node return NULL */
@@ -37,7 +37,7 @@ void push(int elem)
 		temp->prev = new_node;
 	}
 
-	head = new_node;
+	stack = new_node;
 }
 /**
  * pall - print all element inside a stack
@@ -46,7 +46,7 @@ void push(int elem)
  */
 void pall(void)
 {
-	stack_t *temp = head;
+	stack_t *temp = stack;
 	if (temp == NULL)
 		return;
 	while (temp != NULL)
@@ -62,13 +62,13 @@ void pall(void)
  *
  * Return: nothing
  */
-void pint(unsigned int line_num)
+void pint(unsigned int line_number)
 {
-	stack_t *temp = head;
+	stack_t *temp = stack;
 
 	if (temp == NULL)
 	{
-		fprintf(stderr, "L%u: can't pint, stack empty\n", line_num);
+		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
@@ -80,11 +80,21 @@ void pint(unsigned int line_num)
  *
  * Return: nothing
  */
-/*
-void pop(void)
+
+void pop(unsigned int line_number)
 {
-	
-}*/
+	stack_t *temp = stack;
+
+	if (temp == NULL)
+	{
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	stack = stack->next;
+
+	free(temp);
+}
 
 /**
  * swap - swap the top two elements of the stack
@@ -94,6 +104,5 @@ void pop(void)
 /*
 void swap(int elem)
 {
-	
 }
 */
