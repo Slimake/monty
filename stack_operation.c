@@ -101,8 +101,17 @@ void pop(unsigned int line_number)
  *
  * Return: nothing
  */
-/*
-void swap(int elem)
+void swap(unsigned int line_number)
 {
+	int temp1 = stack->n;
+	int temp2 = stack->next->n;
+
+	if (stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	stack->n = temp2;
+	stack->next->n = temp1;
 }
-*/
