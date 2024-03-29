@@ -88,7 +88,7 @@ void monty(int argc, char **argv)
 		}
 		else
 		{
-			fprintf(stderr, "L%u: unknown instruction %s", line_num, arg);
+			fprintf(stderr, "L%u: unknown instruction %s\n", line_num, arg);
 			exit(EXIT_FAILURE);
 		}
 		
