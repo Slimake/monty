@@ -114,8 +114,6 @@ void swap(unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	if 
-
 	temp1 = stack;
 	temp2 = stack->next;
 	temp3 = stack->next->next;
