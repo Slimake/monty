@@ -82,6 +82,10 @@ void monty(int argc, char **argv)
 		{
 			pop(line_num);
 		}
+		else if (flag && strcmp(strtok(arg, " $\t\n"), "swap") == 0)
+		{
+			swap(line_num);
+		}
 		else
 		{
 			fprintf(stderr, "L%u: unknown instruction %s", line_num, arg);
