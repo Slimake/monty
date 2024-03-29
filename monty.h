@@ -41,8 +41,7 @@ void push(int elem);
 void pall();
 void pint(unsigned int line_number);
 void pop(unsigned int line_number);
-/*
-void swap();*/
+void swap(unsigned int line_number);
 
 
 #endif /* MONTY_H */
