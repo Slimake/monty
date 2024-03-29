@@ -120,8 +120,6 @@ void swap(unsigned int line_number)
 
 	temp1->next = temp3;
 
-	temp3->prev = temp1;
-
 	temp2->prev = NULL;
 	temp2->next = temp1;
 
