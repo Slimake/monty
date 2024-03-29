@@ -94,4 +94,6 @@ void monty(int argc, char **argv)
 		
 	}
 	fclose(fp);
+	
+	free_stack(&stack);
 }
