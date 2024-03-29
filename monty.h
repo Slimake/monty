@@ -32,16 +32,16 @@ typedef struct instruction_s
 } instruction_t;
 
 /* global declaration for head */
-extern stack_t *head;
+extern stack_t *stack;
 
 void monty(int argc, char **argv);
 
 /* instruction functions */
 void push(int elem);
 void pall();
-void pint(unsigned int line_num);
+void pint(unsigned int line_number);
+void pop(unsigned int line_number);
 /*
-void pop();
 void swap();*/
 
 
