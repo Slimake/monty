@@ -42,6 +42,7 @@ void pall();
 void pint(unsigned int line_number);
 void pop(unsigned int line_number);
 void swap(unsigned int line_number);
+void free_stack(stack_t **stack);
 
 
 #endif /* MONTY_H */
