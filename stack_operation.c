@@ -125,3 +125,36 @@ void swap(unsigned int line_number)
 
 	stack = temp2;
 }
+
+/**
+ * add - add the top two elements of the stack
+ * line_number: line number of the opcode
+ *
+ * Return: nothing
+ */
+void add(unsigned int line_number)
+{
+	int result;
+	stack_t *temp1 = NULL;
+	stack_t *temp2 = NULL;
+
+	if ((stack == NULL) || (stack->next == NULL))
+	{
+		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	
+	temp1 = stack;
+	temp2 = stack->next;
+
+	result = temp1->n + temp2->n;
+
+	temp2->n = result;
+
+	temp1->next = NULL;
+	temp2->prev = NULL;
+
+	free(temp1);
+
+	stack = temp2;
+}
