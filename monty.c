@@ -92,7 +92,7 @@ void monty(int argc, char **argv)
 		}
 		else if (flag && strcmp(strtok(arg, " $\t\n"), "nop") == 0)
 		{
-			printf("%d\n", 0);
+			
 		}
 		else
 		{
